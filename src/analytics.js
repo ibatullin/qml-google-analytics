@@ -6,10 +6,15 @@ var defaultEndPoint = 'https://ssl.google-analytics.com/collect',
     __endPoint = defaultEndPoint,
     __required  = {v: 1,  ds: 'app'},
     __params = {},
-    __customMetrix = [];
+    __customMetrix = [],
+    __verbose = false;
 
 function setEndpoint(value) {
     __endPoint = value;
+}
+
+function setVerbose(value) {
+    __verbose = value;
 }
 
 function setSampling(value) {
@@ -280,6 +285,9 @@ function request(data, callback) {
             callback(obj);
         }
     };
+
+    if (__verbose)
+      console.log('google-analytics:', __endPoint, rawData)
 
     xhr.open('POST',  __endPoint);
     xhr.send(rawData);
